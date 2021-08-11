@@ -2,12 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SimplePlatformMovement : MonoBehaviour
+public class SamplePlatformMovement : MonoBehaviour
 {
     [Header("Movement")]
     [SerializeField] private Vector3 startingPoint;
     [SerializeField] private Vector3 destination;    
-    [SerializeField] private float smoothTime = 0.5f;    
+    [SerializeField] private float smoothTime = 0.5f;
+    
+    [Header("Sine Wave Movement")]
+    [SerializeField] private float speed = 1.0f;
+    [SerializeField] private float height = 1.0f;
+    [SerializeField] private bool sineWaveMovement = false;
 
     private Vector3 currentVelocity;
     private bool isGoingToDestination = true;
@@ -18,6 +23,12 @@ public class SimplePlatformMovement : MonoBehaviour
     }
 
     private void Update()
+    {
+        if (sineWaveMovement) SineWaveMovement();
+        else Movement();
+    }   
+    
+    private void Movement()
     {
         if (isGoingToDestination)
         {
@@ -32,5 +43,12 @@ public class SimplePlatformMovement : MonoBehaviour
 
             transform.position = Vector3.SmoothDamp(transform.position, startingPoint, ref currentVelocity, smoothTime);
         }
-    }    
+    }
+
+    private void SineWaveMovement()
+    {
+        Vector3 v = new Vector3(transform.position.x, Mathf.Sin(Time.time * speed) * height, transform.position.z);
+
+        transform.position = v;
+    }
 }
