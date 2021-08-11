@@ -12,7 +12,7 @@ public class TimeManager : MonoBehaviour
  
     public bool isBulletTime { get; private set; }
 
-    private float smoothVelocity = 0.0f;
+    private float currentVelocity = 0.0f;
 
     private bool isCoroutineRunning = false;
 
@@ -58,6 +58,7 @@ public class TimeManager : MonoBehaviour
         if (isBulletTime)
         {
             Time.timeScale = 1.0f;
+            isBulletTime = false;
         }
     }
 
@@ -67,18 +68,25 @@ public class TimeManager : MonoBehaviour
 
         if (isBulletTime)
         {
-            Time.timeScale = Mathf.SmoothDamp(Time.timeScale, 1.0f, ref smoothVelocity, smoothTime);
+            Time.timeScale = Mathf.SmoothDamp(Time.timeScale, 1.0f, ref currentVelocity, smoothTime);
         }
     }
 
     IEnumerator RecoverTimeScale()
     {
-        if (isBulletTime)
+        while (true)
         {
-            Time.timeScale += (1.0f / bulletTimeLength) * Time.unscaledDeltaTime;
-            Time.timeScale = Mathf.Clamp(Time.timeScale, 0.0f, 1.0f);
-        }
+            if (isBulletTime)
+            {
+                Time.timeScale += (1.0f / bulletTimeLength) * Time.unscaledDeltaTime;
+                Time.timeScale = Mathf.Clamp(Time.timeScale, 0.0f, 1.0f);
+            }
 
-        yield return null;
+            else break;
+
+            isBulletTime = !Utility.IsNearlySame(Time.timeScale, 1.0f, 0.001f);            
+
+            yield return null;
+        }
     }
 }
