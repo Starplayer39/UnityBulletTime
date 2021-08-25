@@ -12,16 +12,17 @@ public class TimeManager : MonoBehaviour
  
     public bool isBulletTime { get; private set; }
 
+    private float initialTimeScale = 1.0f;
     private float currentVelocity = 0.0f;
-
     private bool isCoroutineRunning = false;
 
+    private void OnEnable() => initialTimeScale = Time.timeScale;
 
     private void Awake()
     {
         if (Instance == null) Instance = this;
         else Destroy(this);
-    }
+    }    
 
     private void Update()
     {        
@@ -70,6 +71,14 @@ public class TimeManager : MonoBehaviour
         {
             Time.timeScale = Mathf.SmoothDamp(Time.timeScale, 1.0f, ref currentVelocity, smoothTime);
         }
+    }
+
+    public float CalculateMultiplier()
+    {
+        if (isBulletTime)
+            return (initialTimeScale - bulletTimeFactor) / initialTimeScale + initialTimeScale;
+        else
+            return 1.0f;
     }
 
     IEnumerator RecoverTimeScale()
