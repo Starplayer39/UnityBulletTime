@@ -12,11 +12,11 @@ public class TimeManager : MonoBehaviour
  
     public bool isBulletTime { get; private set; }
 
-    private float initialTimeScale = 1.0f;
-    private float currentVelocity = 0.0f;
-    private bool isCoroutineRunning = false;
+    private float m_initialTimeScale = 1.0f;
+    private float m_currentVelocity = 0.0f;
+    private bool m_isCoroutineRunning = false;
 
-    private void OnEnable() => initialTimeScale = Time.timeScale;
+    private void OnEnable() => m_initialTimeScale = Time.timeScale;
 
     private void Awake()
     {
@@ -27,26 +27,26 @@ public class TimeManager : MonoBehaviour
     private void Update()
     {        
         isBulletTime = !Utility.IsNearlySame(Time.timeScale, 1.0f, 0.001f);     
-        if (!isBulletTime && isCoroutineRunning)
+        if (!isBulletTime && m_isCoroutineRunning)
         {
             StopCoroutine("RecoverTimeScale");
-            isCoroutineRunning = false;
+            m_isCoroutineRunning = false;
         }
     }
 
     public void DoBulletTime()
     {
-        if (isCoroutineRunning) { StopCoroutine("RecoverTimeScale"); }
+        if (m_isCoroutineRunning) { StopCoroutine("RecoverTimeScale"); }
 
         isBulletTime = true;
         Time.timeScale = bulletTimeFactor;
         StartCoroutine("RecoverTimeScale");
-        isCoroutineRunning = true;
+        m_isCoroutineRunning = true;
     }
 
     public void StartBulletTime()
     {
-        if (isCoroutineRunning) { StopCoroutine("RecoverTimeScale"); }
+        if (m_isCoroutineRunning) { StopCoroutine("RecoverTimeScale"); }
 
         Time.timeScale = bulletTimeFactor;
         isBulletTime = true;        
@@ -54,7 +54,7 @@ public class TimeManager : MonoBehaviour
 
     public void StopBulletTime()
     {
-        if (isCoroutineRunning) { StopCoroutine("RecoverTimeScale"); }
+        if (m_isCoroutineRunning) { StopCoroutine("RecoverTimeScale"); }
 
         if (isBulletTime)
         {
@@ -65,21 +65,21 @@ public class TimeManager : MonoBehaviour
 
     public void StopBulletTimeSmoothly()
     {
-        if (isCoroutineRunning) { StopCoroutine("RecoverTimeScale"); }
+        if (m_isCoroutineRunning) { StopCoroutine("RecoverTimeScale"); }
 
         if (isBulletTime)
         {
-            Time.timeScale = Mathf.SmoothDamp(Time.timeScale, 1.0f, ref currentVelocity, smoothTime);
+            Time.timeScale = Mathf.SmoothDamp(Time.timeScale, 1.0f, ref m_currentVelocity, smoothTime);
         }
     }
 
     public float CalculateMultiplier()
     {
         if (isBulletTime)
-            return (initialTimeScale - bulletTimeFactor) / initialTimeScale + initialTimeScale;
+            return m_initialTimeScale / Time.timeScale;
         else
             return 1.0f;
-    }
+    }    
 
     IEnumerator RecoverTimeScale()
     {
