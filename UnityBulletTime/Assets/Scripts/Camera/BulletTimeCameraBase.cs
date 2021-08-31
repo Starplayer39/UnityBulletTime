@@ -1,17 +1,35 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Camera))]
 public abstract class BulletTimeCameraBase : MonoBehaviour
-{    
+{
+    public GameObject Owner
+    {
+        get
+        {
+            if (gameObject.transform.parent != null)
+            {
+#if UNITY_EDITOR
+                Debug.LogError("The camera object needs to be the child object of the GameObject that owned this Fps Camera to work normally");
+#endif
+                return null;
+            }
+
+            else
+            {
+                return m_owner;
+            }
+        }
+    }
+
     public GameObject CameraObject
     {
         get
         {
             if (m_cameraObject == null)
             {
-#if UNITY_EDITOR
-                Debug.LogError($"{GetType().Name} attached to the '{gameObject.name}' GameObject needs camera GameObject");
-#endif
-                return null;
+                m_cameraObject = gameObject;
+                return m_cameraObject;
             }
 
             else return m_cameraObject;
@@ -28,10 +46,18 @@ public abstract class BulletTimeCameraBase : MonoBehaviour
             {
                 if (m_cameraObject == null)
                 {
+                    m_cameraObject = gameObject;
+                    m_cameraComponent = m_cameraObject.GetComponent<Camera>();
+
+                    if (m_cameraComponent == null)
+                    {
 #if UNITY_EDITOR
-                    Debug.LogError($"{GetType().Name} attached to the '{gameObject.name}' GameObject needs a camera GameObject");
+                        Debug.LogWarning($"{gameObject.name} which has {GetType().Name} component needs Camera component");
 #endif
-                    return null;
+                        m_cameraObject.AddComponent<Camera>();
+                    }
+
+                    return m_cameraComponent;
                 }
 
                 else
@@ -43,52 +69,34 @@ public abstract class BulletTimeCameraBase : MonoBehaviour
 
             else return m_cameraComponent;
         }
-    }
 
-    public GameObject TargetToFollow
-    {
-        get
+        protected set
         {
-            if (m_targetToFollow == null)
-            {
-#if UNITY_EDITOR
-                Debug.LogError($"{GetType().Name} attached to the '{gameObject.name}' GameObject needs a target GameObject to follow");
-#endif
-                return null;
-            }
-
-            else
-            {
-                return m_targetToFollow;
-            }
+            m_cameraComponent = value;
         }
     }    
 
-    [Header("Camera")]
-    [SerializeField] [InspectorName("Camera Object")] protected GameObject m_cameraObject;
-    [SerializeField] [InspectorName("Target To Follow")] protected GameObject m_targetToFollow;    
-    [SerializeField] [InspectorName("Follow Offset")] protected Vector3 m_followOffset;    
-    [SerializeField] [Range(0.0f, 100.0f)] protected float m_followSpeed;
+    [Header("Camera")]    
     [SerializeField] protected bool m_shouldAffectedByTimeScale = false;
 
+    protected GameObject m_owner;
+    protected GameObject m_cameraObject;
     protected Camera m_cameraComponent;
 
     protected virtual void Init()
     {
-        if (m_cameraObject == null)
+        m_cameraObject = gameObject;
+        m_cameraComponent = m_cameraObject.GetComponent<Camera>();
+
+        if (gameObject.transform.parent == null)
         {
-#if UNITY_EDITOR
-            Debug.LogError($"{GetType().Name} attached to the '{gameObject.name}' GameObject needs camera GameObject");
+#if UNITY_EDITOR 
+            Debug.LogError("The camera object needs to be the child object of the GameObject that owned this Fps Camera to work normally");
 #endif
             return;
         }
 
-        else
-        {
-            m_cameraComponent = m_cameraObject.GetComponent<Camera>();
-        }
-
-        m_followSpeed = m_shouldAffectedByTimeScale ? m_followSpeed * Time.deltaTime : m_followSpeed * Time.deltaTime * TimeManager.Instance.CalculateMultiplier();
+        m_owner = gameObject.transform.parent.gameObject;
     }
 
     public abstract void Follow();    

@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class SampleMouseLook : MonoBehaviour
 {
-    public BulletTimeFpsCamera fpsCamera;    
+    public BulletTimeCameraBase bulletTimeCamera;    
 
     private void Update()
-    {        
-        fpsCamera.Look(SampleInputManager.Instance.mouseX, SampleInputManager.Instance.mouseY);
+    {
+        bulletTimeCamera.Look(SampleInputManager.Instance.mouseX, SampleInputManager.Instance.mouseY);
     }
 }
