@@ -8,13 +8,15 @@ public class BulletTimeTpsCamera : BulletTimeCameraBase
     [SerializeField] [InspectorName("Follow Offset")] protected Vector3 m_followOffset;
     [SerializeField] [InspectorName("Should Hide Cursor")] protected bool m_shouldHideCursor = true;
     [SerializeField] [InspectorName("Mouse Sensitivity")] [Range(0.0f, 1000.0f)] protected float m_mouseSensitivity = 100.0f;
-
-    private Transform m_cameraTransform;
-    private Vector3 m_cameraAngle;
+    [SerializeField] [InspectorName("Look Maximum X")] protected float m_lookMaximumX = 90.0f;
+    [SerializeField] [InspectorName("Look Minimum X")] protected float m_lookMinimumX = -90.0f;
+    
+    private Transform m_cameraArm;    
+    private Vector3 m_rotation;
 
     private void Start()
     {
-        Init();
+        Init();        
     }
 
     private void Update()
@@ -24,27 +26,23 @@ public class BulletTimeTpsCamera : BulletTimeCameraBase
 
     private void OnValidate()
     {
-        Init();        
+        base.Init();      
     }
 
     protected override void Init()
-    {
+    {        
         base.Init();
 
         if (m_shouldHideCursor)
         {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
-        }
-
-        m_cameraAngle = m_cameraObject.transform.eulerAngles;
-        m_cameraTransform = m_cameraObject.transform;
-        m_cameraTransform.position = m_owner.transform.position + m_followOffset;
+        }        
     }
 
     public override void Follow()
     {
-        m_cameraTransform.position = m_owner.transform.position + m_followOffset;
+        m_cameraObject.transform.position = m_owner.transform.position + m_followOffset;
     }
 
     public override void Look(float mouseX, float mouseY)
