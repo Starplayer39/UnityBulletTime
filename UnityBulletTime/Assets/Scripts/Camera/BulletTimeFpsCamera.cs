@@ -43,7 +43,7 @@ public class BulletTimeFpsCamera : BulletTimeCameraBase
     {
         if (m_owner != null)
         {
-            float mouseSensitivity = m_isBulletTimeCamera ? m_mouseSensitivity * Time.deltaTime : m_mouseSensitivity * Time.deltaTime * TimeManager.Instance.CalculateMultiplier();
+            float mouseSensitivity = m_isBulletTimeCamera ? m_mouseSensitivity * Time.deltaTime * TimeManager.Instance.CalculateMultiplier() : m_mouseSensitivity * Time.deltaTime;
 
             m_rotationX += -mouseY * mouseSensitivity;
             m_rotationX = Mathf.Clamp(m_rotationX, m_lookMinimumX, m_lookMaximumX);

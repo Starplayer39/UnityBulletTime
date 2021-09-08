@@ -77,8 +77,8 @@ public abstract class BulletTimeCameraBase : MonoBehaviour
     }    
 
     [Header("Camera")]    
-    [SerializeField] [Tooltip("Represent should the camera be affected by Time.TimeScale")] [InspectorName("Is Bullet Time Camera")] 
-    protected bool m_isBulletTimeCamera = false;
+    [SerializeField] [Tooltip("Represent should not the camera be affected by Time.TimeScale")] [InspectorName("Is Bullet Time Camera")] 
+    protected bool m_isBulletTimeCamera = true;
 
     protected GameObject m_owner;
     protected GameObject m_cameraObject;
