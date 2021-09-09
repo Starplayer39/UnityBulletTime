@@ -23,6 +23,19 @@ public class BulletTimeFpsCamera : BulletTimeCameraBase
         Follow();
     }
 
+    private void OnValidate()
+    {
+        if (gameObject.transform.parent == null)
+        {
+#if UNITY_EDITOR 
+            Debug.LogError("The FPS camera object needs to be the child object of the GameObject that owned this Fps Camera to work normally");
+#endif
+            return;
+        }
+
+        m_owner = gameObject.transform.parent.gameObject;
+    }
+
     protected override void Init()
     {
         base.Init();

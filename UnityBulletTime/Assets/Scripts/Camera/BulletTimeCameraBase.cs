@@ -87,17 +87,7 @@ public abstract class BulletTimeCameraBase : MonoBehaviour
     protected virtual void Init()
     {
         m_cameraObject = gameObject;
-        m_cameraComponent = m_cameraObject.GetComponent<Camera>();
-
-        if (gameObject.transform.parent == null)
-        {
-#if UNITY_EDITOR 
-            Debug.LogError("The camera object needs to be the child object of the GameObject that owned this Fps Camera to work normally");
-#endif
-            return;
-        }
-
-        m_owner = gameObject.transform.parent.gameObject;
+        m_cameraComponent = m_cameraObject.GetComponent<Camera>();        
     }
 
     public abstract void Follow();    

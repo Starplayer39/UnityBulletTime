@@ -9,10 +9,7 @@ public class BulletTimeTpsCamera : BulletTimeCameraBase
     [SerializeField] [InspectorName("Should Hide Cursor")] protected bool m_shouldHideCursor = true;
     [SerializeField] [InspectorName("Mouse Sensitivity")] [Range(0.0f, 1000.0f)] protected float m_mouseSensitivity = 100.0f;
     [SerializeField] [InspectorName("Look Maximum X")] protected float m_lookMaximumX = 90.0f;
-    [SerializeField] [InspectorName("Look Minimum X")] protected float m_lookMinimumX = -90.0f;
-    
-    private Transform m_cameraArm;    
-    private Vector3 m_rotation;
+    [SerializeField] [InspectorName("Look Minimum X")] protected float m_lookMinimumX = -90.0f;       
 
     private void Start()
     {
@@ -22,12 +19,7 @@ public class BulletTimeTpsCamera : BulletTimeCameraBase
     private void Update()
     {
         Follow();
-    }
-
-    private void OnValidate()
-    {
-        base.Init();      
-    }
+    }    
 
     protected override void Init()
     {        
