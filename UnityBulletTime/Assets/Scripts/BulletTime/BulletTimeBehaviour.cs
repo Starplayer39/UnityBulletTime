@@ -57,7 +57,7 @@ namespace UnityBulletTime.BulletTime
             {
                 if (bulletTimeVars[i].IsDefined(typeof(BulletTimeVariable), true))
                 {
-                    Attribute attributes = bulletTimeVars[i].GetCustomAttribute(typeof(BulletTimeVariable), true);
+                    Attribute attribute = bulletTimeVars[i].GetCustomAttribute(typeof(BulletTimeVariable), true);
                     
 
                 }
