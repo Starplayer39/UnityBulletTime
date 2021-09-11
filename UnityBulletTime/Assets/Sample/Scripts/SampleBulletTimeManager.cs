@@ -1,33 +1,37 @@
+using UnityBulletTime.BulletTime;
 using UnityEngine;
 
-public class SampleBulletTimeManager : MonoBehaviour
+namespace UnityBulletTime.Sample
 {
-    public static SampleBulletTimeManager Instance;
-
-    private void Awake()
+    public class SampleBulletTimeManager : MonoBehaviour
     {
-        if (Instance == null) Instance = this;
-        else Destroy(this);
-    }
+        public static SampleBulletTimeManager Instance;
 
-    private void Update()
-    {
-        if (SampleInputManager.Instance.isLeftMouseButtonDown && !TimeManager.Instance.IsBulletTime)
+        private void Awake()
         {
-            TimeManager.Instance.StartBulletTime();
-            return;
+            if (Instance == null) Instance = this;
+            else Destroy(this);
         }
 
-        if (SampleInputManager.Instance.isLeftMouseButtonDown && TimeManager.Instance.IsBulletTime)
+        private void Update()
         {
-            TimeManager.Instance.StopBulletTime();
-            return;
-        }
+            if (SampleInputManager.Instance.isLeftMouseButtonDown && !TimeManager.Instance.IsBulletTime)
+            {
+                TimeManager.Instance.StartBulletTime();
+                return;
+            }
 
-        if (SampleInputManager.Instance.isRightMouseButtonDown && !TimeManager.Instance.IsBulletTime)
-        {
-            TimeManager.Instance.DoBulletTime();
-            return;
+            if (SampleInputManager.Instance.isLeftMouseButtonDown && TimeManager.Instance.IsBulletTime)
+            {
+                TimeManager.Instance.StopBulletTime();
+                return;
+            }
+
+            if (SampleInputManager.Instance.isRightMouseButtonDown && !TimeManager.Instance.IsBulletTime)
+            {
+                TimeManager.Instance.DoBulletTime();
+                return;
+            }
         }
     }
 }

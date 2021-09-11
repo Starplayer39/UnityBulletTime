@@ -1,96 +1,101 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Camera))]
-public abstract class BulletTimeCameraBase : MonoBehaviour
+namespace UnityBulletTime.BulletTimeCamera
 {
-    public GameObject Owner
+    [RequireComponent(typeof(Camera))]
+    public abstract class BulletTimeCameraBase : MonoBehaviour
     {
-        get
+        public GameObject Owner
         {
-            if (gameObject.transform.parent != null)
+            get
             {
-#if UNITY_EDITOR
-                Debug.LogError("The camera object needs to be the child object of the GameObject that owned this Fps Camera to work normally");
-#endif
-                return null;
-            }
-
-            else
-            {
-                return m_owner;
-            }
-        }
-    }
-
-    public GameObject CameraObject
-    {
-        get
-        {
-            if (m_cameraObject == null)
-            {
-                m_cameraObject = gameObject;
-                return m_cameraObject;
-            }
-
-            else return m_cameraObject;
-        }
-
-        protected set { m_cameraObject = value; }
-    }
-
-    public Camera CameraComponent
-    {
-        get
-        {
-            if (m_cameraComponent == null)
-            {
-                if (m_cameraObject == null)
+                if (gameObject.transform.parent != null)
                 {
-                    m_cameraObject = gameObject;
-                    m_cameraComponent = m_cameraObject.GetComponent<Camera>();
-
-                    if (m_cameraComponent == null)
-                    {
 #if UNITY_EDITOR
-                        Debug.LogWarning($"{gameObject.name} which has {GetType().Name} component needs Camera component");
+                    Debug.LogError("The camera object needs to be the child object of the GameObject that owned this Fps Camera to work normally");
 #endif
-                        m_cameraObject.AddComponent<Camera>();
-                    }
-
-                    return m_cameraComponent;
+                    return null;
                 }
 
                 else
                 {
-                    m_cameraComponent = m_cameraObject.GetComponent<Camera>();
-                    return m_cameraComponent;
+                    return m_owner;
                 }
             }
-
-            else return m_cameraComponent;
         }
 
-        protected set
+        public GameObject CameraObject
         {
-            m_cameraComponent = value;
+            get
+            {
+                if (m_cameraObject == null)
+                {
+                    m_cameraObject = gameObject;
+                    return m_cameraObject;
+                }
+
+                else return m_cameraObject;
+            }
+
+            protected set { m_cameraObject = value; }
         }
-    }    
 
-    [Header("Camera")]    
-    [SerializeField] [Tooltip("Represent should not the camera be affected by Time.TimeScale")] [InspectorName("Is Bullet Time Camera")] 
-    protected bool m_isBulletTimeCamera = true;
+        public Camera CameraComponent
+        {
+            get
+            {
+                if (m_cameraComponent == null)
+                {
+                    if (m_cameraObject == null)
+                    {
+                        m_cameraObject = gameObject;
+                        m_cameraComponent = m_cameraObject.GetComponent<Camera>();
 
-    protected GameObject m_owner;
-    protected GameObject m_cameraObject;
-    protected Camera m_cameraComponent;
+                        if (m_cameraComponent == null)
+                        {
+#if UNITY_EDITOR
+                            Debug.LogWarning($"{gameObject.name} which has {GetType().Name} component needs Camera component");
+#endif
+                            m_cameraObject.AddComponent<Camera>();
+                        }
 
-    protected virtual void Init()
-    {
-        m_cameraObject = gameObject;
-        m_cameraComponent = m_cameraObject.GetComponent<Camera>();        
+                        return m_cameraComponent;
+                    }
+
+                    else
+                    {
+                        m_cameraComponent = m_cameraObject.GetComponent<Camera>();
+                        return m_cameraComponent;
+                    }
+                }
+
+                else return m_cameraComponent;
+            }
+
+            protected set
+            {
+                m_cameraComponent = value;
+            }
+        }
+
+        [Header("Camera")]
+        [SerializeField]
+        [Tooltip("Represent should not the camera be affected by Time.TimeScale")]
+        [InspectorName("Is Bullet Time Camera")]
+        protected bool m_isBulletTimeCamera = true;
+
+        protected GameObject m_owner;
+        protected GameObject m_cameraObject;
+        protected Camera m_cameraComponent;
+
+        protected virtual void Init()
+        {
+            m_cameraObject = gameObject;
+            m_cameraComponent = m_cameraObject.GetComponent<Camera>();
+        }
+
+        public abstract void Follow();
+
+        public abstract void Look(float mouseX, float mouseY);
     }
-
-    public abstract void Follow();    
-
-    public abstract void Look(float mouseX, float mouseY);
 }

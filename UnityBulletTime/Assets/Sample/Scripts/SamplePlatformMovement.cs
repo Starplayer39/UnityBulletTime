@@ -1,52 +1,56 @@
 using UnityEngine;
 
-public class SamplePlatformMovement : MonoBehaviour
+namespace UnityBulletTime.Sample
 {
-    [Header("Movement")]
-    [SerializeField] private Vector3 startingPoint;
-    [SerializeField] private Vector3 destination;    
-    [SerializeField] private float smoothTime = 0.5f;
-    
-    [Header("Sine Wave Movement")]
-    [SerializeField] private float speed = 1.0f;
-    [SerializeField] private float height = 1.0f;
-    [SerializeField] private bool sineWaveMovement = false;
-
-    private Vector3 currentVelocity;
-    private bool isGoingToDestination = true;
-
-    private void Start()
+    [DisallowMultipleComponent]
+    public class SamplePlatformMovement : MonoBehaviour
     {
-        transform.position = startingPoint;
-    }
+        [Header("Movement")]
+        [SerializeField] private Vector3 startingPoint;
+        [SerializeField] private Vector3 destination;
+        [SerializeField] private float smoothTime = 0.5f;
 
-    private void Update()
-    {
-        if (sineWaveMovement) SineWaveMovement();
-        else Movement();
-    }   
-    
-    private void Movement()
-    {
-        if (isGoingToDestination)
+        [Header("Sine Wave Movement")]
+        [SerializeField] private float speed = 1.0f;
+        [SerializeField] private float height = 1.0f;
+        [SerializeField] private bool sineWaveMovement = false;
+
+        private Vector3 currentVelocity;
+        private bool isGoingToDestination = true;
+
+        private void Start()
         {
-            if (Utility.IsNearlySame(transform.position, destination, 0.3f)) isGoingToDestination = false;
-
-            transform.position = Vector3.SmoothDamp(transform.position, destination, ref currentVelocity, smoothTime);
+            transform.position = startingPoint;
         }
 
-        if (!isGoingToDestination)
+        private void Update()
         {
-            if (Utility.IsNearlySame(transform.position, startingPoint, 0.3f)) isGoingToDestination = true;
-
-            transform.position = Vector3.SmoothDamp(transform.position, startingPoint, ref currentVelocity, smoothTime);
+            if (sineWaveMovement) SineWaveMovement();
+            else Movement();
         }
-    }
 
-    private void SineWaveMovement()
-    {
-        Vector3 v = new Vector3(transform.position.x, Mathf.Sin(Time.time * speed) * height, transform.position.z);
+        private void Movement()
+        {
+            if (isGoingToDestination)
+            {
+                if (Utility.IsNearlySame(transform.position, destination, 0.3f)) isGoingToDestination = false;
 
-        transform.position = v;
+                transform.position = Vector3.SmoothDamp(transform.position, destination, ref currentVelocity, smoothTime);
+            }
+
+            if (!isGoingToDestination)
+            {
+                if (Utility.IsNearlySame(transform.position, startingPoint, 0.3f)) isGoingToDestination = true;
+
+                transform.position = Vector3.SmoothDamp(transform.position, startingPoint, ref currentVelocity, smoothTime);
+            }
+        }
+
+        private void SineWaveMovement()
+        {
+            Vector3 v = new Vector3(transform.position.x, Mathf.Sin(Time.time * speed) * height, transform.position.z);
+
+            transform.position = v;
+        }
     }
 }

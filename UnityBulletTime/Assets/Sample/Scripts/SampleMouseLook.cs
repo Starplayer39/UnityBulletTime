@@ -1,13 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
+using UnityBulletTime.BulletTimeCamera;
 using UnityEngine;
 
-public class SampleMouseLook : MonoBehaviour
+namespace UnityBulletTime.Sample
 {
-    public BulletTimeCameraBase bulletTimeCamera;    
-
-    private void Update()
+    [DisallowMultipleComponent]
+    public class SampleMouseLook : MonoBehaviour
     {
-        bulletTimeCamera.Look(SampleInputManager.Instance.mouseX, SampleInputManager.Instance.mouseY);
+        public BulletTimeCameraBase bulletTimeCamera;
+
+        private void Update()
+        {
+            bulletTimeCamera.Look(SampleInputManager.Instance.mouseX, SampleInputManager.Instance.mouseY);
+        }
     }
 }
