@@ -2,7 +2,7 @@ using System;
 
 namespace UnityBulletTime.Attributes
 {
-    [AttributeUsage(AttributeTargets.Field, AllowMultiple = true)]
+    [AttributeUsage(AttributeTargets.Field, AllowMultiple = false)]
     public class BulletTimeVariable : Attribute
     {
         public bool ShouldMultiplyDeltaTime { get => m_shouldMultiplyDeltaTime; }
