@@ -2,15 +2,17 @@ using System;
 
 namespace UnityBulletTime.Attributes
 {
-    [AttributeUsage(AttributeTargets.Field, AllowMultiple = false)]
+    [AttributeUsage(AttributeTargets.Field, AllowMultiple = true)]
     public class BulletTimeVariable : Attribute
     {
-        bool m_shouldMultiplyDeltaTime = false;
+        public bool ShouldMultiplyDeltaTime { get => m_shouldMultiplyDeltaTime; }
+
+        bool m_shouldMultiplyDeltaTime = true;
 
         /// <param name="shouldMultiplyDeltaTime">Multiply 'Time.deltaTime' to the value on 'Bullet Time' if true</param>
         public BulletTimeVariable(bool shouldMultiplyDeltaTime = false)
         {
-            this.m_shouldMultiplyDeltaTime = shouldMultiplyDeltaTime;
+            m_shouldMultiplyDeltaTime = shouldMultiplyDeltaTime;
         }
     }
 }

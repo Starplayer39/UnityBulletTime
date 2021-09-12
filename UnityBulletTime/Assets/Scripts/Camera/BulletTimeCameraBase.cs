@@ -1,9 +1,10 @@
+using UnityBulletTime.BulletTime;
 using UnityEngine;
 
 namespace UnityBulletTime.BulletTimeCamera
 {
     [RequireComponent(typeof(Camera))]
-    public abstract class BulletTimeCameraBase : MonoBehaviour
+    public abstract class BulletTimeCameraBase : BulletTimeBehaviour
     {
         public GameObject Owner
         {

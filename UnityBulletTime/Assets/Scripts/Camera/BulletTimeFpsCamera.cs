@@ -1,3 +1,4 @@
+using UnityBulletTime.Attributes;
 using UnityBulletTime.BulletTime;
 using UnityEngine;
 
@@ -9,14 +10,16 @@ namespace UnityBulletTime.BulletTimeCamera
         [Header("Fps Camera")]
         [SerializeField] [InspectorName("Follow Offset")] protected Vector3 m_followOffset;
         [SerializeField] [InspectorName("Should Hide Cursor")] protected bool m_shouldHideCursor = true;
-        [SerializeField] [InspectorName("Mouse Sensitivity")] [Range(0.0f, 1000.0f)] protected float m_mouseSensitivity = 100.0f;
+        [SerializeField] [InspectorName("Mouse Sensitivity")] [Range(0.0f, 1000.0f)] [BulletTimeVariable(false)] protected float m_mouseSensitivity = 100.0f;
         [SerializeField] [InspectorName("Look Maximum X")] protected float m_lookMaximumX = 90.0f;
         [SerializeField] [InspectorName("Look Minimum X")] protected float m_lookMinimumX = -90.0f;
 
         private float m_rotationX = 0.0f;
 
-        private void Start()
+        protected override void Start()
         {
+            base.Start();
+
             Init();
         }
 
@@ -58,12 +61,12 @@ namespace UnityBulletTime.BulletTimeCamera
         {
             if (m_owner != null)
             {
-                float mouseSensitivity = m_isBulletTimeCamera ? m_mouseSensitivity * Time.deltaTime * TimeManager.Instance.CalculateMultiplier() : m_mouseSensitivity * Time.deltaTime;
+                float multiplier = m_isBulletTimeCamera ? Time.deltaTime : (TimeManager.Instance.IsBulletTime ? Time.deltaTime * Time.deltaTime : Time.deltaTime);               
 
-                m_rotationX += -mouseY * mouseSensitivity;
+                m_rotationX += -mouseY * m_mouseSensitivity * multiplier;
                 m_rotationX = Mathf.Clamp(m_rotationX, m_lookMinimumX, m_lookMaximumX);
                 m_cameraObject.transform.localRotation = Quaternion.Euler(m_rotationX, 0, 0);
-                m_owner.transform.rotation *= Quaternion.Euler(0, mouseX * mouseSensitivity, 0);
+                m_owner.transform.rotation *= Quaternion.Euler(0, mouseX * m_mouseSensitivity * multiplier, 0);
             }
 
             else

@@ -12,8 +12,10 @@ namespace UnityBulletTime.BulletTimeCamera
         [SerializeField] [InspectorName("Look Maximum X")] protected float m_lookMaximumX = 90.0f;
         [SerializeField] [InspectorName("Look Minimum X")] protected float m_lookMinimumX = -90.0f;
 
-        private void Start()
+        protected override void Start()
         {
+            base.Start();
+
             Init();
         }
 
