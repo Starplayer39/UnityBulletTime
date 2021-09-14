@@ -5,7 +5,9 @@ namespace UnityBulletTime.Sample
 {
     public class SampleBulletTimeManager : MonoBehaviour
     {
-        public static SampleBulletTimeManager Instance;        
+        public static SampleBulletTimeManager Instance;
+        
+        [InspectorName("Log Bullet Time Event")] public bool m_shouldLogBulletTimeEvent = true;        
 
         private void Awake()
         {
@@ -15,8 +17,15 @@ namespace UnityBulletTime.Sample
 
         private void Start()
         {
-            TimeManager.Instance.OnBulletTimeEnabled += () => Debug.Log("BulletTime Enabled");
-            TimeManager.Instance.OnBulletTimeDisabled += () => Debug.Log("BulletTime Disabled");
+            TimeManager.Instance.OnBulletTimeEnabled += () =>
+            {
+                if (m_shouldLogBulletTimeEvent) { Debug.Log("BulletTime Enabled"); }
+            };
+
+            TimeManager.Instance.OnBulletTimeDisabled += () =>
+            {
+                if (m_shouldLogBulletTimeEvent) { Debug.Log("BulletTime Disabled"); }
+            };
         }
 
         private void Update()
