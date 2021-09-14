@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Utility : MonoBehaviour
 {
-    public static bool IsNearlySame(float value, float valueToCompare, float factor=0.0001f)
+    public static bool IsNearlySame(float value, float valueToCompare, float tolerance=0.0001f)
     {
         float min = valueToCompare - factor;
         float max = valueToCompare + factor;
@@ -10,7 +10,7 @@ public class Utility : MonoBehaviour
         return min <= value && value <= max;
     }
 
-    public static bool IsNearlySame(Vector3 value, Vector3 valueToCompare, float factor= 0.0001f)
+    public static bool IsNearlySame(Vector3 value, Vector3 valueToCompare, float tolerance=0.0001f)
     {
         bool b1 = IsNearlySame(value.x, valueToCompare.x, factor);
         bool b2 = IsNearlySame(value.y, valueToCompare.y, factor);
