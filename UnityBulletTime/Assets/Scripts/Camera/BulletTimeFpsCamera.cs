@@ -10,7 +10,7 @@ namespace UnityBulletTime.BulletTimeCamera
         [Header("Fps Camera")]
         [SerializeField] [InspectorName("Follow Offset")] protected Vector3 m_followOffset;
         [SerializeField] [InspectorName("Should Hide Cursor")] protected bool m_shouldHideCursor = true;
-        [SerializeField] [InspectorName("Mouse Sensitivity")] [Range(0.0f, 1000.0f)] [BulletTimeVariable(false)] protected float m_mouseSensitivity = 100.0f;
+        [SerializeField] [InspectorName("Mouse Sensitivity")] [Range(0.0f, 1000.0f)] [BulletTimeVariable] protected float m_mouseSensitivity = 100.0f;
         [SerializeField] [InspectorName("Look Maximum X")] protected float m_lookMaximumX = 90.0f;
         [SerializeField] [InspectorName("Look Minimum X")] protected float m_lookMinimumX = -90.0f;
 

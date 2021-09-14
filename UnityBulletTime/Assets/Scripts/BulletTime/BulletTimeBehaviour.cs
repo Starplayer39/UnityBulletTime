@@ -62,6 +62,8 @@ namespace UnityBulletTime.BulletTime
                                 fieldContainer.CalculatedValue = (int)Math.Round(fieldContainer.LastValue * TimeManager.Instance.CalculateMultiplier());
 
                             m_intFieldContainers.Add(fieldContainer);
+
+                            continue;
                         }
 
                         else if (type == m_floatType)
@@ -76,6 +78,8 @@ namespace UnityBulletTime.BulletTime
                                 fieldContainer.CalculatedValue = fieldContainer.LastValue * TimeManager.Instance.CalculateMultiplier();
                             
                             m_floatFieldContainers.Add(fieldContainer);
+
+                            continue;
                         }
 
                         else if (type == m_vector3Type)
@@ -90,6 +94,8 @@ namespace UnityBulletTime.BulletTime
                                 fieldContainer.CalculatedValue = fieldContainer.LastValue * TimeManager.Instance.CalculateMultiplier();
 
                             m_vector3FieldContainers.Add(fieldContainer);
+
+                            continue;
                         }                        
 
                         else if (type == m_doubleType)
@@ -104,6 +110,8 @@ namespace UnityBulletTime.BulletTime
                                 fieldContainer.CalculatedValue = fieldContainer.LastValue * TimeManager.Instance.CalculateMultiplier();
                             
                             m_doubleFieldContainers.Add(fieldContainer);
+
+                            continue;
                         }
 
                         else if (type == m_longType)
@@ -118,6 +126,8 @@ namespace UnityBulletTime.BulletTime
                                 fieldContainer.CalculatedValue = (long)Math.Round(fieldContainer.LastValue * TimeManager.Instance.CalculateMultiplier());
 
                             m_longFieldContainers.Add(fieldContainer);
+
+                            continue;
                         }                        
 
                         else if (type == m_shortType)
@@ -132,6 +142,8 @@ namespace UnityBulletTime.BulletTime
                                 fieldContainer.CalculatedValue = (short)Math.Round(fieldContainer.LastValue * TimeManager.Instance.CalculateMultiplier());
 
                             m_shortFieldContainers.Add(fieldContainer);
+
+                            continue;
                         }
 
                         else if (type == m_uintType)
@@ -146,6 +158,8 @@ namespace UnityBulletTime.BulletTime
                                 fieldContainer.CalculatedValue = (uint)Math.Round(fieldContainer.LastValue * TimeManager.Instance.CalculateMultiplier());
 
                             m_uintFieldContainers.Add(fieldContainer);
+
+                            continue;
                         }
 
                         else if (type == m_ulongType)
@@ -160,6 +174,8 @@ namespace UnityBulletTime.BulletTime
                                 fieldContainer.CalculatedValue = (ulong)Math.Round(fieldContainer.LastValue * TimeManager.Instance.CalculateMultiplier());
 
                             m_ulongFieldContainers.Add(fieldContainer);
+
+                            continue;
                         }
 
                         else if (type == m_ushortType)
@@ -174,7 +190,9 @@ namespace UnityBulletTime.BulletTime
                                 fieldContainer.CalculatedValue = (ushort)Math.Round(fieldContainer.LastValue * TimeManager.Instance.CalculateMultiplier());
 
                             m_ushortFieldContainers.Add(fieldContainer);
-                        }                        
+
+                            continue;
+                        }               
                     }
                 }
             }
@@ -182,7 +200,7 @@ namespace UnityBulletTime.BulletTime
 
         private void OnBulletTimeEnabled()
         {
-            //TODO: Start Coroutine 'Recalculate'
+            StartCoroutine(Recalculate());
 
             if (m_intFieldContainers != null)
             {
@@ -194,10 +212,11 @@ namespace UnityBulletTime.BulletTime
                 for (int i = 0; i < m_floatFieldContainers.Count; i++)
                 {
                     FieldContainer<float> fieldContainer = m_floatFieldContainers[i];
+                    object value = fieldContainer.FieldInfo.GetValue(this);
 
-                    if (!(fieldContainer.FieldInfo.GetValue(this).Equals(fieldContainer.LastValue)))
+                    if (!(value.Equals(fieldContainer.LastValue)))
                     {
-                        fieldContainer.LastValue = (float)fieldContainer.FieldInfo.GetValue(this);                        
+                        fieldContainer.LastValue = (float)value;                        
                     }
 
                     if (fieldContainer.BulletTimeVariableAttribute.ShouldMultiplyDeltaTime)
@@ -247,7 +266,7 @@ namespace UnityBulletTime.BulletTime
 
         private void OnBulletTimeDisabled()
         {
-            //TODO: Stop Coroutine 'Recalculate'
+            StopCoroutine(Recalculate());
 
             if (m_intFieldContainers != null)
             {
@@ -257,7 +276,7 @@ namespace UnityBulletTime.BulletTime
             if (m_floatFieldContainers != null)
             {
                 for (int i = 0; i < m_floatFieldContainers.Count; i++)
-                {
+                {                    
                     m_floatFieldContainers[i].FieldInfo.SetValue(this, m_floatFieldContainers[i].LastValue);
                 }
             }
@@ -300,8 +319,75 @@ namespace UnityBulletTime.BulletTime
         
         private IEnumerator Recalculate()
         {
-            //TODO: Calculate the value of the fields that changed
-            yield return null;
+            while (true)
+            {
+                if (m_intFieldContainers != null)
+                {
+
+                }
+
+                if (m_floatFieldContainers != null)
+                {
+                    for (int i = 0; i < m_floatFieldContainers.Count; i++)
+                    {
+                        FieldContainer<float> fieldContainer = m_floatFieldContainers[i];
+                        object value = fieldContainer.FieldInfo.GetValue(this);
+
+                        if (value.Equals(fieldContainer.CalculatedValue))
+                        {                            
+                            continue;
+                        }
+
+                        float castedValue = (float)value;
+
+                        fieldContainer.LastValue = castedValue;
+
+                        if (fieldContainer.BulletTimeVariableAttribute.ShouldMultiplyDeltaTime)
+                            fieldContainer.CalculatedValue = fieldContainer.LastValue * Time.deltaTime * TimeManager.Instance.CalculateMultiplier();
+                        else
+                            fieldContainer.CalculatedValue = fieldContainer.LastValue * TimeManager.Instance.CalculateMultiplier();
+
+                        fieldContainer.FieldInfo.SetValue(this, fieldContainer.CalculatedValue);
+                    }
+                }
+
+                if (m_vector3FieldContainers != null)
+                {
+
+                }
+
+                if (m_doubleFieldContainers != null)
+                {
+
+                }
+
+                if (m_longFieldContainers != null)
+                {
+
+                }
+
+                if (m_shortFieldContainers != null)
+                {
+
+                }
+
+                if (m_uintFieldContainers != null)
+                {
+
+                }
+
+                if (m_ulongFieldContainers != null)
+                {
+
+                }
+
+                if (m_ushortFieldContainers != null)
+                {
+
+                }
+
+                yield return null;
+            }            
         }
     }
 }
