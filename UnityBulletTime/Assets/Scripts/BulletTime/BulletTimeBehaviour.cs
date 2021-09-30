@@ -199,9 +199,7 @@ namespace UnityBulletTime.BulletTime
         }
 
         private void OnBulletTimeEnabled()
-        {
-            StartCoroutine(Recalculate());
-
+        {            
             if (m_intFieldContainers != null)
             {
                 for (int i = 0; i < m_intFieldContainers.Count; i++)
@@ -390,6 +388,8 @@ namespace UnityBulletTime.BulletTime
                     fieldContainer.FieldInfo.SetValue(this, fieldContainer.CalculatedValue);
                 }
             }
+
+            StartCoroutine(Recalculate());
         }                                            
 
         private void OnBulletTimeDisabled()
