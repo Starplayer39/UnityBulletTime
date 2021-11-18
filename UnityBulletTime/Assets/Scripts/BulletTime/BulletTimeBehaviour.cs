@@ -1,12 +1,13 @@
-using System;
-using System.Reflection;
-using System.Collections;
-using System.Collections.Generic;
-using UnityBulletTime.Attributes;
-using UnityEngine;
-
-namespace UnityBulletTime.BulletTime
+namespace UnityBulletTime.BulletTime.Core
 {
+    using System;
+    using System.Reflection;
+    using System.Collections;
+    using System.Collections.Generic;
+    using UnityBulletTime.Attributes;
+    using UnityBulletTime.Data;    
+    using UnityEngine;
+
     public abstract class BulletTimeBehaviour : MonoBehaviour
     {        
         readonly Type m_shortType = typeof(short);
@@ -33,8 +34,8 @@ namespace UnityBulletTime.BulletTime
         {            
             InitBulletTimeVars();
 
-            TimeManager.Instance.OnBulletTimeEnabled += this.OnBulletTimeEnabled;
-            TimeManager.Instance.OnBulletTimeDisabled += this.OnBulletTimeDisabled;
+            TimeManager.Instance.BulletTimeBehaviourProcessOnBulletTimeEnabled += this.OnBulletTimeEnabled;
+            TimeManager.Instance.BulletTimeBehaviourProcessOnBulletTimeDisabled += this.OnBulletTimeDisabled;
         }
 
         private void InitBulletTimeVars()

@@ -1,8 +1,8 @@
-using UnityBulletTime.BulletTime;
-using UnityEngine;
-
-namespace UnityBulletTime.BulletTimeCamera
+namespace UnityBulletTime.BulletTime.Camera
 {
+    using UnityBulletTime.BulletTime.Core;
+    using UnityEngine;
+
     [RequireComponent(typeof(Camera))]
     public abstract class BulletTimeCameraBase : BulletTimeBehaviour
     {

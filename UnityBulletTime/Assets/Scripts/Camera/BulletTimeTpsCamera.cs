@@ -1,7 +1,7 @@
-using UnityEngine;
-
-namespace UnityBulletTime.BulletTimeCamera
+namespace UnityBulletTime.BulletTime.Camera
 {
+    using UnityEngine;
+
     [DisallowMultipleComponent]
     public class BulletTimeTpsCamera : BulletTimeCameraBase
     {

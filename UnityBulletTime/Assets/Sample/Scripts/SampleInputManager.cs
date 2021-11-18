@@ -1,7 +1,7 @@
-using UnityEngine;
-
 namespace UnityBulletTime.Sample
-{    
+{
+    using UnityEngine;
+
     public class SampleInputManager : MonoBehaviour
     {
         public static SampleInputManager Instance;

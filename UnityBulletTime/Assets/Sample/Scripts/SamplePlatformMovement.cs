@@ -1,7 +1,8 @@
-using UnityEngine;
-
 namespace UnityBulletTime.Sample
 {
+    using UnityBulletTime.Utility;
+    using UnityEngine;
+
     [DisallowMultipleComponent]
     public class SamplePlatformMovement : MonoBehaviour
     {

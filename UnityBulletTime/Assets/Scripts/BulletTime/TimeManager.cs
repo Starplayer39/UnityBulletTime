@@ -1,9 +1,10 @@
-using System;
-using System.Collections;
-using UnityEngine;
+namespace UnityBulletTime.BulletTime.Core
+{
+    using System;
+    using System.Collections;
+    using UnityBulletTime.Utility;
+    using UnityEngine;    
 
-namespace UnityBulletTime.BulletTime
-{    
     public class TimeManager : MonoBehaviour
     {
         public static TimeManager Instance;
@@ -15,6 +16,9 @@ namespace UnityBulletTime.BulletTime
 
         public Action OnBulletTimeEnabled;
         public Action OnBulletTimeDisabled;
+
+        internal Action BulletTimeBehaviourProcessOnBulletTimeEnabled;
+        internal Action BulletTimeBehaviourProcessOnBulletTimeDisabled;
 
         public bool IsBulletTime { get => m_isBulletTime; }
 
@@ -54,6 +58,11 @@ namespace UnityBulletTime.BulletTime
                 {
                     OnBulletTimeEnabled();
                 }
+
+                if (BulletTimeBehaviourProcessOnBulletTimeEnabled != null)
+                {
+                    BulletTimeBehaviourProcessOnBulletTimeEnabled();
+                }
             }
         }
 
@@ -69,6 +78,11 @@ namespace UnityBulletTime.BulletTime
                 if (OnBulletTimeDisabled != null)
                 {
                     OnBulletTimeDisabled();
+                }
+
+                if (BulletTimeBehaviourProcessOnBulletTimeDisabled != null)
+                {
+                    BulletTimeBehaviourProcessOnBulletTimeDisabled();
                 }
             }
         }

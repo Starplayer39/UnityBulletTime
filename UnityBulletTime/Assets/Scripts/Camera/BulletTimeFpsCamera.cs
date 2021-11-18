@@ -1,9 +1,9 @@
-using UnityBulletTime.Attributes;
-using UnityBulletTime.BulletTime;
-using UnityEngine;
-
-namespace UnityBulletTime.BulletTimeCamera
+namespace UnityBulletTime.BulletTime.Camera
 {
+    using UnityBulletTime.Attributes;
+    using UnityBulletTime.BulletTime.Core;
+    using UnityEngine;
+
     [DisallowMultipleComponent]
     public class BulletTimeFpsCamera : BulletTimeCameraBase
     {

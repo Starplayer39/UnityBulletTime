@@ -1,8 +1,8 @@
-using UnityBulletTime.BulletTime;
-using UnityEngine;
-
 namespace UnityBulletTime.Sample
 {
+    using UnityBulletTime.BulletTime.Core;
+    using UnityEngine;
+
     public class SampleBulletTimeManager : MonoBehaviour
     {
         public static SampleBulletTimeManager Instance;

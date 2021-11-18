@@ -1,21 +1,20 @@
-using System;
-using System.Reflection;
-using UnityBulletTime.Attributes;
-using UnityEngine;
-
-namespace UnityBulletTime.BulletTime
+namespace UnityBulletTime.Data
 {
+    using System;
+    using System.Reflection;
+    using UnityBulletTime.Attributes;
+
     internal class FieldContainer<T> where T : struct
     {
-        public FieldInfo FieldInfo { get => m_fieldInfo; }
+        internal FieldInfo FieldInfo { get => m_fieldInfo; }
 
-        public Type FieldType { get => m_type; }
+        internal Type FieldType { get => m_type; }
 
-        public T LastValue { get => m_lastValue; set => m_lastValue = value; }
+        internal T LastValue { get => m_lastValue; set => m_lastValue = value; }
 
-        public T CalculatedValue { get => m_calculatedValue; set => m_calculatedValue = value; }
+        internal T CalculatedValue { get => m_calculatedValue; set => m_calculatedValue = value; }
 
-        public BulletTimeVariable BulletTimeVariableAttribute { get => m_bulletTimeVariableAttributes; }
+        internal BulletTimeVariable BulletTimeVariableAttribute { get => m_bulletTimeVariableAttributes; }
 
         private FieldInfo m_fieldInfo;
         private Type m_type;

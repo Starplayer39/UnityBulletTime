@@ -1,7 +1,7 @@
-using System;
-
 namespace UnityBulletTime.Attributes
 {
+    using System;
+
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = false)]
     public class BulletTimeVariable : Attribute
     {
