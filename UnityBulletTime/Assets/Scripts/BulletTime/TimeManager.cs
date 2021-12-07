@@ -1,8 +1,7 @@
-namespace UnityBulletTime.BulletTime.Core
+namespace UnityBulletTime
 {
     using System;
-    using System.Collections;
-    using UnityBulletTime.Utility;
+    using System.Collections;    
     using UnityEngine;    
 
     public class TimeManager : MonoBehaviour

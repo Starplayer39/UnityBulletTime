@@ -1,6 +1,6 @@
-namespace UnityBulletTime.BulletTime.Camera
+namespace UnityBulletTime.Camera
 {
-    using UnityBulletTime.BulletTime.Core;
+    using UnityBulletTime;
     using UnityEngine;
 
     [RequireComponent(typeof(Camera))]

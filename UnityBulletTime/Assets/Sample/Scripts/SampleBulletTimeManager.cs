@@ -1,6 +1,6 @@
 namespace UnityBulletTime.Sample
 {
-    using UnityBulletTime.BulletTime.Core;
+    using UnityBulletTime;
     using UnityEngine;
 
     public class SampleBulletTimeManager : MonoBehaviour

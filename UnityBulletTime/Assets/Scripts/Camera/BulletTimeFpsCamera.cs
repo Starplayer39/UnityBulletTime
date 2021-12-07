@@ -1,4 +1,4 @@
-namespace UnityBulletTime.BulletTime.Camera
+namespace UnityBulletTime.Camera
 {
     using UnityBulletTime.Attributes;
     using UnityBulletTime.BulletTime.Core;

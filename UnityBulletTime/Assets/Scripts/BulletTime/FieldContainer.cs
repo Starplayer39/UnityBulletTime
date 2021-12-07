@@ -1,8 +1,7 @@
 namespace UnityBulletTime.Data
 {
     using System;
-    using System.Reflection;
-    using UnityBulletTime.Attributes;
+    using System.Reflection;    
 
     internal class FieldContainer<T> where T : struct
     {

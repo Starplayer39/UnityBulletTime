@@ -1,4 +1,4 @@
-namespace UnityBulletTime.Attributes
+namespace UnityBulletTime
 {
     using System;
 

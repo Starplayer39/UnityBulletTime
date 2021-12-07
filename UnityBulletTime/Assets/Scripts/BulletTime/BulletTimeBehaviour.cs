@@ -1,10 +1,9 @@
-namespace UnityBulletTime.BulletTime.Core
+namespace UnityBulletTime
 {
     using System;
     using System.Reflection;
     using System.Collections;
-    using System.Collections.Generic;
-    using UnityBulletTime.Attributes;
+    using System.Collections.Generic;    
     using UnityBulletTime.Data;    
     using UnityEngine;
 

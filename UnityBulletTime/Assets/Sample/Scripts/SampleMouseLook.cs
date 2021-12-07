@@ -1,6 +1,6 @@
 namespace UnityBulletTime.Sample
 {
-    using UnityBulletTime.BulletTime.Camera;
+    using UnityBulletTime.Camera;
     using UnityEngine;
 
     [DisallowMultipleComponent]
