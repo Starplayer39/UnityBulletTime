@@ -13,20 +13,20 @@ namespace UnityBulletTime.Data
 
         internal T CalculatedValue { get => m_calculatedValue; set => m_calculatedValue = value; }
 
-        internal BulletTimeVariable BulletTimeVariableAttribute { get => m_bulletTimeVariableAttributes; }
+        internal BulletTimeVariableAttribute BulletTimeVariableAttribute { get => m_bulletTimeVariableAttributes; }
 
         private FieldInfo m_fieldInfo;
         private Type m_type;
         private T m_lastValue;
         private T m_calculatedValue;
-        private BulletTimeVariable m_bulletTimeVariableAttributes;    
+        private BulletTimeVariableAttribute m_bulletTimeVariableAttributes;    
 
-        internal FieldContainer(FieldInfo fieldInfo, BulletTimeVariable attribute, object obj)
+        internal FieldContainer(FieldInfo fieldInfo, BulletTimeVariableAttribute attribute, object obj)
         {
             Init(fieldInfo, attribute, obj);
         }                      
         
-        private void Init(FieldInfo fieldInfo, BulletTimeVariable attribute, object obj)
+        private void Init(FieldInfo fieldInfo, BulletTimeVariableAttribute attribute, object obj)
         {
             m_fieldInfo = fieldInfo;
             m_type = m_fieldInfo.FieldType;

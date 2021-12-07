@@ -45,9 +45,9 @@ namespace UnityBulletTime
 
             for (int i = 0; i < bulletTimeVars.Length; i++)
             {                
-                if (bulletTimeVars[i].IsDefined(typeof(BulletTimeVariable), true))
+                if (bulletTimeVars[i].IsDefined(typeof(BulletTimeVariableAttribute), true))
                 {
-                    Attribute attribute = bulletTimeVars[i].GetCustomAttribute(typeof(BulletTimeVariable), true);
+                    Attribute attribute = bulletTimeVars[i].GetCustomAttribute(typeof(BulletTimeVariableAttribute), true);
                     Type type = bulletTimeVars[i].FieldType;
                     
                     if (attribute != null)
@@ -56,7 +56,7 @@ namespace UnityBulletTime
                         {
                             if (m_intFieldContainers == null) m_intFieldContainers = new List<FieldContainer<int>>();
 
-                            FieldContainer<int> fieldContainer = new FieldContainer<int>(bulletTimeVars[i], (BulletTimeVariable)attribute, this);
+                            FieldContainer<int> fieldContainer = new FieldContainer<int>(bulletTimeVars[i], (BulletTimeVariableAttribute)attribute, this);
 
                             if (fieldContainer.BulletTimeVariableAttribute.ShouldMultiplyDeltaTime)
                                 fieldContainer.CalculatedValue = (int)Math.Round(fieldContainer.LastValue * Time.deltaTime * TimeManager.Instance.CalculateMultiplier());
@@ -72,7 +72,7 @@ namespace UnityBulletTime
                         {
                             if (m_floatFieldContainers == null) m_floatFieldContainers = new List<FieldContainer<float>>();
 
-                            FieldContainer<float> fieldContainer = new FieldContainer<float>(bulletTimeVars[i], (BulletTimeVariable)attribute, this);
+                            FieldContainer<float> fieldContainer = new FieldContainer<float>(bulletTimeVars[i], (BulletTimeVariableAttribute)attribute, this);
 
                             if (fieldContainer.BulletTimeVariableAttribute.ShouldMultiplyDeltaTime)
                                 fieldContainer.CalculatedValue = fieldContainer.LastValue * Time.deltaTime * TimeManager.Instance.CalculateMultiplier();
@@ -88,7 +88,7 @@ namespace UnityBulletTime
                         {
                             if (m_vector3FieldContainers == null) m_vector3FieldContainers = new List<FieldContainer<Vector3>>();
 
-                            FieldContainer<Vector3> fieldContainer = new FieldContainer<Vector3>(bulletTimeVars[i], (BulletTimeVariable)attribute, this);
+                            FieldContainer<Vector3> fieldContainer = new FieldContainer<Vector3>(bulletTimeVars[i], (BulletTimeVariableAttribute)attribute, this);
 
                             if (fieldContainer.BulletTimeVariableAttribute.ShouldMultiplyDeltaTime)
                                 fieldContainer.CalculatedValue = fieldContainer.LastValue * Time.deltaTime * TimeManager.Instance.CalculateMultiplier();
@@ -104,7 +104,7 @@ namespace UnityBulletTime
                         {
                             if (m_vector2FieldContainers == null) m_vector2FieldContainers = new List<FieldContainer<Vector2>>();
 
-                            FieldContainer<Vector2> fieldContainer = new FieldContainer<Vector2>(bulletTimeVars[i], (BulletTimeVariable)attribute, this);
+                            FieldContainer<Vector2> fieldContainer = new FieldContainer<Vector2>(bulletTimeVars[i], (BulletTimeVariableAttribute)attribute, this);
 
                             if (fieldContainer.BulletTimeVariableAttribute.ShouldMultiplyDeltaTime)
                                 fieldContainer.CalculatedValue = fieldContainer.LastValue * Time.deltaTime * TimeManager.Instance.CalculateMultiplier();
@@ -120,7 +120,7 @@ namespace UnityBulletTime
                         {
                             if (m_doubleFieldContainers == null) m_doubleFieldContainers = new List<FieldContainer<double>>();
 
-                            FieldContainer<double> fieldContainer = new FieldContainer<double>(bulletTimeVars[i], (BulletTimeVariable)attribute, this);
+                            FieldContainer<double> fieldContainer = new FieldContainer<double>(bulletTimeVars[i], (BulletTimeVariableAttribute)attribute, this);
 
                             if (fieldContainer.BulletTimeVariableAttribute.ShouldMultiplyDeltaTime)
                                 fieldContainer.CalculatedValue = fieldContainer.LastValue * Time.deltaTime * TimeManager.Instance.CalculateMultiplier();
@@ -136,7 +136,7 @@ namespace UnityBulletTime
                         {
                             if (m_longFieldContainers == null) m_longFieldContainers = new List<FieldContainer<long>>();
 
-                            FieldContainer<long> fieldContainer = new FieldContainer<long>(bulletTimeVars[i], (BulletTimeVariable)attribute, this);
+                            FieldContainer<long> fieldContainer = new FieldContainer<long>(bulletTimeVars[i], (BulletTimeVariableAttribute)attribute, this);
 
                             if (fieldContainer.BulletTimeVariableAttribute.ShouldMultiplyDeltaTime)
                                 fieldContainer.CalculatedValue = (long)Math.Round(fieldContainer.LastValue * Time.deltaTime * TimeManager.Instance.CalculateMultiplier());
@@ -152,7 +152,7 @@ namespace UnityBulletTime
                         {
                             if (m_shortFieldContainers == null) m_shortFieldContainers = new List<FieldContainer<short>>();
 
-                            FieldContainer<short> fieldContainer = new FieldContainer<short>(bulletTimeVars[i], (BulletTimeVariable)attribute, this);
+                            FieldContainer<short> fieldContainer = new FieldContainer<short>(bulletTimeVars[i], (BulletTimeVariableAttribute)attribute, this);
 
                             if (fieldContainer.BulletTimeVariableAttribute.ShouldMultiplyDeltaTime)
                                 fieldContainer.CalculatedValue = (short)Math.Round(fieldContainer.LastValue * Time.deltaTime * TimeManager.Instance.CalculateMultiplier());
@@ -168,7 +168,7 @@ namespace UnityBulletTime
                         {
                             if (m_uintFieldContainers == null) m_uintFieldContainers = new List<FieldContainer<uint>>();
 
-                            FieldContainer<uint> fieldContainer = new FieldContainer<uint>(bulletTimeVars[i], (BulletTimeVariable)attribute, this);
+                            FieldContainer<uint> fieldContainer = new FieldContainer<uint>(bulletTimeVars[i], (BulletTimeVariableAttribute)attribute, this);
 
                             if (fieldContainer.BulletTimeVariableAttribute.ShouldMultiplyDeltaTime)
                                 fieldContainer.CalculatedValue = (uint)Math.Round(fieldContainer.LastValue * Time.deltaTime * TimeManager.Instance.CalculateMultiplier());
@@ -184,7 +184,7 @@ namespace UnityBulletTime
                         {
                             if (m_ulongFieldContainers == null) m_ulongFieldContainers = new List<FieldContainer<ulong>>();
 
-                            FieldContainer<ulong> fieldContainer = new FieldContainer<ulong>(bulletTimeVars[i], (BulletTimeVariable)attribute, this);
+                            FieldContainer<ulong> fieldContainer = new FieldContainer<ulong>(bulletTimeVars[i], (BulletTimeVariableAttribute)attribute, this);
 
                             if (fieldContainer.BulletTimeVariableAttribute.ShouldMultiplyDeltaTime)
                                 fieldContainer.CalculatedValue = (ulong)Math.Round(fieldContainer.LastValue * Time.deltaTime * TimeManager.Instance.CalculateMultiplier());
@@ -200,7 +200,7 @@ namespace UnityBulletTime
                         {
                             if (m_ushortFieldContainers == null) m_ushortFieldContainers = new List<FieldContainer<ushort>>();
 
-                            FieldContainer<ushort> fieldContainer = new FieldContainer<ushort>(bulletTimeVars[i], (BulletTimeVariable)attribute, this);
+                            FieldContainer<ushort> fieldContainer = new FieldContainer<ushort>(bulletTimeVars[i], (BulletTimeVariableAttribute)attribute, this);
 
                             if (fieldContainer.BulletTimeVariableAttribute.ShouldMultiplyDeltaTime)
                                 fieldContainer.CalculatedValue = (ushort)Math.Round(fieldContainer.LastValue * Time.deltaTime * TimeManager.Instance.CalculateMultiplier());
