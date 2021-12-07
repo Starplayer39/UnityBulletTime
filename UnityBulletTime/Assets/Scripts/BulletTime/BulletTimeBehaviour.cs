@@ -17,7 +17,8 @@ namespace UnityBulletTime
         readonly Type m_ulongType = typeof(ulong);
         readonly Type m_floatType = typeof(float);
         readonly Type m_doubleType = typeof(double);        
-        readonly Type m_vector3Type = typeof(Vector3);        
+        readonly Type m_vector3Type = typeof(Vector3);
+        readonly Type m_vector2Type = typeof(Vector2);
 
         List<FieldContainer<short>> m_shortFieldContainers = null;
         List<FieldContainer<ushort>> m_ushortFieldContainers = null;
@@ -27,17 +28,18 @@ namespace UnityBulletTime
         List<FieldContainer<ulong>> m_ulongFieldContainers = null;
         List<FieldContainer<float>> m_floatFieldContainers = null;
         List<FieldContainer<double>> m_doubleFieldContainers = null;        
-        List<FieldContainer<Vector3>> m_vector3FieldContainers = null;        
+        List<FieldContainer<Vector3>> m_vector3FieldContainers = null;
+        List<FieldContainer<Vector2>> m_vector2FieldContainers = null;
 
         protected virtual void Start()
-        {            
-            InitBulletTimeVars();
+        {
+            InitializeBulletTimeVariables();
 
             TimeManager.Instance.BulletTimeBehaviourProcessOnBulletTimeEnabled += this.OnBulletTimeEnabled;
             TimeManager.Instance.BulletTimeBehaviourProcessOnBulletTimeDisabled += this.OnBulletTimeDisabled;
         }
 
-        private void InitBulletTimeVars()
+        private void InitializeBulletTimeVariables()
         {
             FieldInfo[] bulletTimeVars = GetType().GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.FlattenHierarchy);
 
@@ -96,7 +98,23 @@ namespace UnityBulletTime
                             m_vector3FieldContainers.Add(fieldContainer);
 
                             continue;
-                        }                        
+                        }  
+                        
+                        else if (type == m_vector2Type)
+                        {
+                            if (m_vector2FieldContainers == null) m_vector2FieldContainers = new List<FieldContainer<Vector2>>();
+
+                            FieldContainer<Vector2> fieldContainer = new FieldContainer<Vector2>(bulletTimeVars[i], (BulletTimeVariable)attribute, this);
+
+                            if (fieldContainer.BulletTimeVariableAttribute.ShouldMultiplyDeltaTime)
+                                fieldContainer.CalculatedValue = fieldContainer.LastValue * Time.deltaTime * TimeManager.Instance.CalculateMultiplier();
+                            else
+                                fieldContainer.CalculatedValue = fieldContainer.LastValue * TimeManager.Instance.CalculateMultiplier();
+
+                            m_vector2FieldContainers.Add(fieldContainer);
+
+                            continue;
+                        }
 
                         else if (type == m_doubleType)
                         {
@@ -252,6 +270,27 @@ namespace UnityBulletTime
                     if (!(value.Equals(fieldContainer.LastValue)))
                     {
                         fieldContainer.LastValue = (Vector3)value;
+                    }
+
+                    if (fieldContainer.BulletTimeVariableAttribute.ShouldMultiplyDeltaTime)
+                        fieldContainer.CalculatedValue = fieldContainer.LastValue * Time.deltaTime * TimeManager.Instance.CalculateMultiplier();
+                    else
+                        fieldContainer.CalculatedValue = fieldContainer.LastValue * TimeManager.Instance.CalculateMultiplier();
+
+                    fieldContainer.FieldInfo.SetValue(this, fieldContainer.CalculatedValue);
+                }
+            }
+
+            if (m_vector2FieldContainers != null)
+            {
+                for (int i = 0; i < m_vector2FieldContainers.Count; i++)
+                {
+                    FieldContainer<Vector2> fieldContainer = m_vector2FieldContainers[i];
+                    object value = fieldContainer.FieldInfo.GetValue(this);
+
+                    if (!(value.Equals(fieldContainer.LastValue)))
+                    {
+                        fieldContainer.LastValue = (Vector2)value;
                     }
 
                     if (fieldContainer.BulletTimeVariableAttribute.ShouldMultiplyDeltaTime)
@@ -420,6 +459,14 @@ namespace UnityBulletTime
                 }
             }
 
+            if (m_vector2FieldContainers != null)
+            {
+                for (int i = 0; i < m_vector2FieldContainers.Count; i++)
+                {
+                    m_vector2FieldContainers[i].FieldInfo.SetValue(this, m_vector2FieldContainers[i].LastValue);
+                }
+            }
+
             if (m_doubleFieldContainers != null)
             {
                 for (int i = 0; i < m_doubleFieldContainers.Count; i++)
@@ -536,6 +583,31 @@ namespace UnityBulletTime
                         }
 
                         Vector3 castedValue = (Vector3)value;
+
+                        fieldContainer.LastValue = castedValue;
+
+                        if (fieldContainer.BulletTimeVariableAttribute.ShouldMultiplyDeltaTime)
+                            fieldContainer.CalculatedValue = fieldContainer.LastValue * Time.deltaTime * TimeManager.Instance.CalculateMultiplier();
+                        else
+                            fieldContainer.CalculatedValue = fieldContainer.LastValue * TimeManager.Instance.CalculateMultiplier();
+
+                        fieldContainer.FieldInfo.SetValue(this, fieldContainer.CalculatedValue);
+                    }
+                }
+
+                if (m_vector2FieldContainers != null)
+                {
+                    for (int i = 0; i < m_vector2FieldContainers.Count; i++)
+                    {
+                        FieldContainer<Vector2> fieldContainer = m_vector2FieldContainers[i];
+                        object value = fieldContainer.FieldInfo.GetValue(this);
+
+                        if (value.Equals(fieldContainer.CalculatedValue))
+                        {
+                            continue;
+                        }
+
+                        Vector2 castedValue = (Vector2)value;
 
                         fieldContainer.LastValue = castedValue;
 

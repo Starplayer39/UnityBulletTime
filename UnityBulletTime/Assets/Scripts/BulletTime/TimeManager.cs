@@ -36,7 +36,7 @@ namespace UnityBulletTime
 
         private void Update()
         {
-            m_isBulletTime = !Utility.IsNearlySame(Time.timeScale, 1.0f, 0.001f);
+            m_isBulletTime = !UnityBulletTime.Utility.Utility.IsNearlySame(Time.timeScale, 1.0f, 0.001f);
             if (!m_isBulletTime && m_isCoroutineRunning)
             {
                 StopCoroutine("RecoverTimeScale");
@@ -133,7 +133,7 @@ namespace UnityBulletTime
 
                 else break;
 
-                m_isBulletTime = !Utility.IsNearlySame(Time.timeScale, 1.0f, 0.001f);
+                m_isBulletTime = !UnityBulletTime.Utility.Utility.IsNearlySame(Time.timeScale, 1.0f, 0.001f);
 
                 yield return null;
             }

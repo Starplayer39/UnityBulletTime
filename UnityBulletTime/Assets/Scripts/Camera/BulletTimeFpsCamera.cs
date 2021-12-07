@@ -1,7 +1,6 @@
 namespace UnityBulletTime.Camera
 {
-    using UnityBulletTime.Attributes;
-    using UnityBulletTime.BulletTime.Core;
+    using UnityBulletTime;    
     using UnityEngine;
 
     [DisallowMultipleComponent]
