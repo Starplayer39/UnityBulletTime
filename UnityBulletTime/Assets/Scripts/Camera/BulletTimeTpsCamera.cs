@@ -1,3 +1,5 @@
+//Bullet Time Camera will be implemented later
+
 namespace UnityBulletTime.Camera
 {
     using UnityEngine;
