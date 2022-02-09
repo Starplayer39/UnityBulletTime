@@ -8,11 +8,12 @@ namespace UnityBulletTime.Camera
     public class BulletTimeTpsCamera : BulletTimeCameraBase
     {
         [Header("Tps Camera")]
-        [SerializeField] [InspectorName("Follow Offset")] protected Vector3 m_followOffset;
+        [SerializeField] [InspectorName("Aim Target")] protected Transform m_aimTarget;
+        [SerializeField] [InspectorName("Camera Arm Length")] [Range(0.0f, 100.0f)] protected float m_cameraArmLength;
         [SerializeField] [InspectorName("Should Hide Cursor")] protected bool m_shouldHideCursor = true;
-        [SerializeField] [InspectorName("Mouse Sensitivity")] [Range(0.0f, 1000.0f)] protected float m_mouseSensitivity = 100.0f;
-        [SerializeField] [InspectorName("Look Maximum X")] protected float m_lookMaximumX = 90.0f;
-        [SerializeField] [InspectorName("Look Minimum X")] protected float m_lookMinimumX = -90.0f;
+        [SerializeField] [InspectorName("Mouse Sensitivity")] [Range(0.0f, 1000.0f)] [BulletTimeVariable] protected float m_mouseSensitivity = 100.0f;
+        [SerializeField] [InspectorName("Look Maximum X")] protected float m_lookMaximumX = 50.0f;
+        [SerializeField] [InspectorName("Look Minimum X")] protected float m_lookMinimumX = -50.0f;
 
         protected override void Start()
         {
@@ -37,13 +38,25 @@ namespace UnityBulletTime.Camera
             }
         }
 
-        public override void Follow()
+        private void OnValidate()
         {
-            m_cameraObject.transform.position = m_owner.transform.position + m_followOffset;
+            if (gameObject.transform.parent == null)
+            {
+#if UNITY_EDITOR
+                Debug.LogError("The TPS camera object needs to be the child object of the GameObject that owned this Tps Camera to function properly");
+#endif
+                return;
+            }
+
+            m_owner = gameObject.transform.parent?.gameObject;
         }
 
+        public override void Follow()
+        {            
+        }        
+
         public override void Look(float mouseX, float mouseY)
-        {
+        {          
         }
     }
 }

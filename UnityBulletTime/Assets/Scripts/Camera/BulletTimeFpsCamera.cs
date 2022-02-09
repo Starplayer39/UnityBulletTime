@@ -34,7 +34,7 @@ namespace UnityBulletTime.Camera
             if (gameObject.transform.parent == null)
             {
 #if UNITY_EDITOR
-                Debug.LogError("The FPS camera object needs to be the child object of the GameObject that owned this Fps Camera to work normally");
+                Debug.LogError("The FPS camera object needs to be the child object of the GameObject that owned this Fps Camera to function properly");
 #endif
                 return;
             }
@@ -62,7 +62,7 @@ namespace UnityBulletTime.Camera
         {
             if (m_owner != null)
             {
-                float multiplier = m_isBulletTimeCamera ? Time.deltaTime : (TimeManager.Instance.IsBulletTime ? Time.deltaTime * Time.deltaTime : Time.deltaTime);               
+                float multiplier = m_isBulletTimeCamera ? Time.deltaTime : (TimeManager.Instance.IsBulletTime ? Mathf.Pow(Time.deltaTime, 2.0f) : Time.deltaTime);               
 
                 m_rotationX += -mouseY * m_mouseSensitivity * multiplier;
                 m_rotationX = Mathf.Clamp(m_rotationX, m_lookMinimumX, m_lookMaximumX);
@@ -73,7 +73,7 @@ namespace UnityBulletTime.Camera
             else
             {
 #if UNITY_EDITOR
-                Debug.LogError("The camera object needs to be the child object of the GameObject that owned this Fps Camera to work normally");
+                Debug.LogError("The camera object needs to be the child object of the GameObject that owned this Fps Camera to function properly");
 #endif
                 return;
             }

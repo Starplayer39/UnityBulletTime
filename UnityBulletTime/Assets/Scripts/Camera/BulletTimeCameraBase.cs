@@ -12,10 +12,10 @@ namespace UnityBulletTime.Camera
         {
             get
             {
-                if (gameObject.transform.parent != null)
+                if (gameObject.transform.parent == null)
                 {
 #if UNITY_EDITOR
-                    Debug.LogError("The camera object needs to be the child object of the GameObject that owned this Fps Camera to work normally");
+                    Debug.LogError("The camera object needs to be the child object of the GameObject that owned this BulletTime Camera to function properly");
 #endif
                     return null;
                 }
@@ -85,11 +85,11 @@ namespace UnityBulletTime.Camera
         [SerializeField]
         [Tooltip("Represent should not the camera be affected by Time.TimeScale")]
         [InspectorName("Is Bullet Time Camera")]
-        protected bool m_isBulletTimeCamera = true;
+        protected bool m_isBulletTimeCamera = true;        
 
         protected GameObject m_owner;
         protected GameObject m_cameraObject;
-        protected Camera m_cameraComponent;
+        protected Camera m_cameraComponent;        
 
         protected virtual void Init()
         {

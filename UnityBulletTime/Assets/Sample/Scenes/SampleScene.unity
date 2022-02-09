@@ -524,6 +524,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2acc8caa97b9f941a1b54593c1d0aa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_shouldLogBulletTimeEvent: 1
 --- !u!1 &1317815975
 GameObject:
   m_ObjectHideFlags: 0
@@ -652,7 +653,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5e52a543c6170b488507b1ea499f2f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletTimeCamera: {fileID: 1532331781}
+  bulletTimeCamera: {fileID: 1844034515}
 --- !u!1 &1411764858
 GameObject:
   m_ObjectHideFlags: 0
@@ -716,7 +717,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1532331780
 Transform:
   m_ObjectHideFlags: 0
@@ -902,7 +903,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1844034514
 Transform:
   m_ObjectHideFlags: 0
@@ -929,12 +930,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b2b4354defd32749b3b434767e5f2f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_isBulletTimeCamera: 0
-  m_followOffset: {x: 0, y: 0, z: -3.5}
+  m_isBulletTimeCamera: 1
+  m_aimTarget: {fileID: 1317815980}
+  m_cameraArmLength: 5
   m_shouldHideCursor: 1
   m_mouseSensitivity: 100
-  m_lookMaximumX: 90
-  m_lookMinimumX: -90
+  m_lookMaximumX: 55
+  m_lookMinimumX: -35
 --- !u!20 &1844034516
 Camera:
   m_ObjectHideFlags: 0
