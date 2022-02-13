@@ -81,6 +81,14 @@ namespace UnityBulletTime.Camera
             }
         }
 
+        public enum UpdateMode
+        {
+            Update,
+            LateUpdate            
+        }
+
+        public UpdateMode m_updateMode { get; protected set; }
+
         [Header("Camera")]
         [SerializeField]
         [Tooltip("Represent should not the camera be affected by Time.TimeScale")]
@@ -96,6 +104,8 @@ namespace UnityBulletTime.Camera
             m_cameraObject = gameObject;
             m_cameraComponent = m_cameraObject.GetComponent<Camera>();
         }
+
+        public void ForceChangeUpdateMode(UpdateMode updateMode) => m_updateMode = updateMode;
 
         public abstract void Follow();
 

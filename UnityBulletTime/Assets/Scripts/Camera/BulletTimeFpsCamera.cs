@@ -40,6 +40,7 @@ namespace UnityBulletTime.Camera
             }
 
             m_owner = gameObject.transform.parent.gameObject;
+            m_updateMode = UpdateMode.Update;
         }
 
         protected override void Init()
@@ -51,6 +52,8 @@ namespace UnityBulletTime.Camera
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;
             }
+
+            m_updateMode = UpdateMode.Update;
         }
 
         public override void Follow()
