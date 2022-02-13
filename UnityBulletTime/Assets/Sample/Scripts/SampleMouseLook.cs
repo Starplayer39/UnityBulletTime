@@ -6,11 +6,22 @@ namespace UnityBulletTime.Sample
     [DisallowMultipleComponent]
     public class SampleMouseLook : MonoBehaviour
     {
-        public BulletTimeCameraBase bulletTimeCamera;
+        public BulletTimeCameraBase bulletTimeCamera;        
 
         private void Update()
         {
-            bulletTimeCamera.Look(SampleInputManager.Instance.mouseX, SampleInputManager.Instance.mouseY);
+            if (bulletTimeCamera.m_updateMode == BulletTimeCameraBase.UpdateMode.Update)
+            {
+                bulletTimeCamera.Look(SampleInputManager.Instance.mouseX, SampleInputManager.Instance.mouseY);
+            }
+        }
+
+        private void LateUpdate()
+        {
+            if (bulletTimeCamera.m_updateMode == BulletTimeCameraBase.UpdateMode.LateUpdate)
+            {
+                bulletTimeCamera.Look(SampleInputManager.Instance.mouseX, SampleInputManager.Instance.mouseY);
+            }
         }
     }
 }
