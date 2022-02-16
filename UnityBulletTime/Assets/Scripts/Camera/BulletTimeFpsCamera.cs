@@ -1,4 +1,4 @@
-//Bullet Time Camera will be implemented later
+//Bullet Time Camera will be fully implemented later
 
 namespace UnityBulletTime.Camera
 {
