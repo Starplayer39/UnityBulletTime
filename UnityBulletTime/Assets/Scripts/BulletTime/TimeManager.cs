@@ -9,9 +9,9 @@ namespace UnityBulletTime
         public static TimeManager Instance;
 
         [Header("Bullet Time")]
-        public float bulletTimeFactor = 0.05f;
-        public float bulletTimeLength = 9.0f;
-        public float smoothTime = 0.3f;
+        [InspectorName("Target Time Scale")] [Range(0.0f, 1.0f)] public float targetTimeScale = 0.05f;
+        [InspectorName("Bullet Time Length")] public float bulletTimeLength = 9.0f;
+        [InspectorName("Smooth Time")]public float smoothTime = 0.3f;
 
         public Action OnBulletTimeEnabled;
         public Action OnBulletTimeDisabled;
@@ -20,6 +20,7 @@ namespace UnityBulletTime
         internal Action BulletTimeBehaviourProcessOnBulletTimeDisabled;
 
         public bool IsBulletTime { get => m_isBulletTime; }
+        public bool IsSmoothBulletTime { get => m_isBulletTime && m_isCoroutineRunning; }
 
         private bool m_isBulletTime = false;
         private bool m_isCoroutineRunning = false;
@@ -32,7 +33,7 @@ namespace UnityBulletTime
         {
             if (Instance == null) Instance = this;
             else Destroy(this);
-        }
+        }        
 
         private void Update()
         {
@@ -41,7 +42,8 @@ namespace UnityBulletTime
             {
                 StopCoroutine("RecoverTimeScale");
                 m_isCoroutineRunning = false;
-            }
+                BulletTimeBehaviourProcessOnBulletTimeDisabled();
+            }            
         }
 
         public void EnableBulletTime()
@@ -51,7 +53,7 @@ namespace UnityBulletTime
             if (!m_isBulletTime)
             {
                 m_isBulletTime = true;
-                Time.timeScale = bulletTimeFactor;
+                Time.timeScale = targetTimeScale;
 
                 if (OnBulletTimeEnabled != null)
                 {
@@ -111,11 +113,17 @@ namespace UnityBulletTime
             {
                 Time.timeScale = Mathf.SmoothDamp(Time.timeScale, 1.0f, ref m_currentVelocity, smoothTime);
             }
-        }
+        }        
 
         public float CalculateMultiplier()
         {
             if (m_isBulletTime)
+                /* 
+                 *  As Time.timeScale becomes (p / q) * m_initialTimeScale on Bullet Time. 
+                 *  To make value is same as before the Time.timeScale changes, 
+                 *  We could just simply multiply m_initialTimeScale / Time.timeScale to the changed value. 
+                 *  Because the value after Time.timeScale changed is equal to (p / q) * (original value).
+                 */
                 return m_initialTimeScale / Time.timeScale;
             else
                 return 1.0f;
